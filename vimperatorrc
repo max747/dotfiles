@@ -1,0 +1,71 @@
+"3.3 (created: 2011/11/13 17:32:12)
+
+source! /home/tkojima/.vimperatorrc.local
+
+set hintchars=ASDFGHJKLQWERTYUIOPZXCVBNM
+set hlsearch
+set complete=tsl
+set focuscontent
+
+nnoremap j 5j
+nnoremap k 5k
+nnoremap h <C-p>
+nnoremap l <C-n>
+
+nnoremap ,es :set encoding=Shift_JIS<CR>
+nnoremap ,ec :set encoding=EUC-JP<CR>
+nnoremap ,eu :set encoding=UTF-8<CR>
+nnoremap ,ei :set encodeing=ISO-2022-JP<CR>
+
+style -name commandline-ime chrome://* #liberator-commandline-command input { ime-mode: inactive; }
+
+" plugin_loader.js
+let g:plugin_loader_roots = "/home/tkojima/.vimperator/github/vimperator-plugins"
+let g:plugin_loader_plugins = "_libly,copy,feedSomeKeys_3,statusline-toolbar,multi_requester,prevent-pseudo-domain,opener,direct_bookmark,sbmcommentsviewer,walk-input,twittperator"
+
+command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
+
+" direct_bookmark.js
+let g:direct_sbm_use_services_by_tag = "h"
+let g:direct_sbm_use_services_by_post = "h"
+nnoremap B :sbm<CR>
+nnoremap <C-B> :sbm<Space>
+
+" sbmcommentsviewer.js
+let g:def_sbm_format = "id,tags,comment,timestamp"
+let g:def_sbms = "h"
+noremap V :viewSBMComments<CR>
+
+" multi_requester.js
+nnoremap ,ma :mr alc<Space>
+
+" feedSomeKeys_3.js
+lazy fmaps -u='^https?://mail\.google\.com/(mail|a)/' c j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc
+"lazy fmaps -u='^https?://plus\.google\.com/' j k
+lazy fmaps -u='^http://b\.hatena\.ne\.jp/(?!(entry|articles|guide))' j k o,oj e a,b
+nnoremap -u='^http://b\.hatena\.ne\.jp/(?!(entry|articles|guide))' a :xh a //*[contains(concat(" ",normalize-space(@class)," "), " current-element ")]/a<CR>
+
+
+javascript <<EOM
+autocommands.add(
+    'VimperatorEnter', '.*',
+    function () {
+        let Cc = Components.classes['@greasemonkey.mozdev.org/greasemonkey-service;1'] ||
+                 Components.classes['@scriptish.erikvold.com/scriptish-service;1'];
+        if (Cc) {
+            Cc = Cc.getService().wrappedJSObject;
+            if (Cc.injectScripts.toSource().search('sharedObject') == -1) {
+                Cc.injectScripts = liberator.eval(
+                    Cc.injectScripts.toSource()
+                        .replace(/(?=(?:var|let) delays|(?:firebug|fb)Console)/,
+                                'var sharedObject = {};' +
+                                'sharedObject.window = sharedObject;' +
+                                'sharedObject.__proto__ = new XPCNativeWrapper(unsafeContentWin);')
+                        .replace(/(?=sandbox\.__proto__)/, ' sandbox.window = sharedObject;'),
+                    Cc.injectScripts);
+            };
+        };
+    });
+EOM
+
+" vim: set ft=vimperator:
