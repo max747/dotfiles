@@ -1,3 +1,2 @@
 import rlcompleter, readline
 readline.parse_and_bind('tab: complete')
-readline.write_history_file('.python_history')
