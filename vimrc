@@ -102,6 +102,6 @@ let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
 
 " yankring
 let g:yankring_history_dir = expand($HOME)
-let g:yankring_history_dir = '.yankring_history'
+let g:yankring_history_file = '.yankring_history'
 let g:yankring_max_history = 10
 
