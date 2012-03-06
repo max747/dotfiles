@@ -80,6 +80,15 @@ let g:netrw_sort_sequence="[\\/]$,*,\\.\\(mv\\|old\\|cp\\|bak\\|orig\\)[0-9]*[\\
 " ファイラーでカレントディレクトリを表示しない
 set directory-=.
 
+" 保存時に行末の空白を除去する
+autocmd BufWritePre * :%s/\s\+$//ge
+
+" CTRL-hjklでウィンドウ移動
+nnoremap <C-j> :<C-w>j
+nnoremap <C-k> :<C-k>j
+nnoremap <C-l> :<C-l>j
+nnoremap <C-h> :<C-h>j
+
 " -------------------------------------------------- plugin settings
 
 " powerline

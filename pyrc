@@ -1,2 +1,10 @@
 import rlcompleter, readline
 readline.parse_and_bind('tab: complete')
+
+from pprint import pprint
+def dirp(*args, **kargs):
+    pprint(dir(*args, **kargs))
+
+def dirpp(*args, **kargs):
+    pprint([x for x in dir(*args, **kargs) if not x.startswith("_")])
+

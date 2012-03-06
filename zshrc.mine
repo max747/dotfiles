@@ -1,5 +1,7 @@
 # PATH
-export PATH=$PATH:~/devel/bin
+export MAVEN_HOME=~/devel/maven
+export JAVA_HOME=/usr/java/jdk
+export PATH=$JAVA_HOME/bin:~/devel/bin:$MAVEN_HOME/bin:$PATH
 
 # Python Initialize script
 export PYTHONSTARTUP=~/.pyrc
@@ -11,11 +13,16 @@ export VIRTUALENV_USE_DISTRIBUTE=1
 # EDITOR
 export EDITOR=/usr/bin/vim
 
+# less options
+export LESS=-rgMj10
+
 # texlive
 export PATH=$PATH:/usr/local/texlive/2011/bin/x86_64-linux
 
 # aliases
-alias exp='nautilus'
+alias exp=nautilus
+alias diff=colordiff
+alias lv='lv -c'
 
 # git-flow の補完
 source ~/.git-flow-completion.zsh
