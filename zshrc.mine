@@ -1,14 +1,27 @@
+# 存在チェック用関数の定義
+function exists { which $1 &> /dev/null }
+
 # PATH
-export MAVEN_HOME=~/devel/maven
-export JAVA_HOME=/usr/java/jdk
-export PATH=$JAVA_HOME/bin:~/devel/bin:$MAVEN_HOME/bin:$PATH
+if [ -d ~/devel/bin ]; then
+    export PATH=~/devel/bin:$PATH
+fi
+if [ -d ~/devel/maven ]; then
+    export MAVEN_HOME=~/devel/maven
+    export PATH=$MAVEN_HOME/bin:$PATH
+fi
+if [ -d /usr/java/jdk ]; then
+    export JAVA_HOME=/usr/java/jdk
+    export PATH=$JAVA_HOME/bin:$PATH
+fi
 
 # Python Initialize script
 export PYTHONSTARTUP=~/.pyrc
 
 # virtualenvwrapper
-. /usr/local/bin/virtualenvwrapper.sh
-export VIRTUALENV_USE_DISTRIBUTE=1
+if [ -f /usr/local/virtualenvwrapper.sh ]; then
+    . /usr/local/bin/virtualenvwrapper.sh
+    export VIRTUALENV_USE_DISTRIBUTE=1
+fi
 
 # EDITOR
 export EDITOR=/usr/bin/vim
@@ -17,15 +30,25 @@ export EDITOR=/usr/bin/vim
 export LESS=-rgMj10
 
 # texlive
-export PATH=$PATH:/usr/local/texlive/2011/bin/x86_64-linux
+if [ -d /usr/local/texlive ]; then
+    export PATH=$PATH:/usr/local/texlive/2011/bin/x86_64-linux
+fi
 
 # aliases
-alias exp=nautilus
-alias diff=colordiff
-alias lv='lv -c'
+if exists nautilus; then
+    alias exp=nautilus
+fi
+if exists colordiff; then
+    alias diff=colordiff
+fi
+if exists lv; then
+    alias lv='lv -c'
+fi
 
 # git-flow の補完
-source ~/.git-flow-completion.zsh
+if [ -f ~/.git-flow-completion.zsh ]; then
+    source ~/.git-flow-completion.zsh
+fi
 
 # Git だろうと Mercurial だろうと、ブランチ名をzshのプロンプトにスマートに表示する方法 - ess sup
 # http://d.hatena.ne.jp/mollifier/20090814/p1
@@ -55,8 +78,6 @@ _cache_hosts=($( print_known_hosts ))
 
 # zsh history search
 # https://github.com/mooz/percol
-function exists { which $1 &> /dev/null }
-
 if exists percol; then
     function percol_select_history() {
         local tac
