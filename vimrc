@@ -23,6 +23,7 @@ Bundle 'eregex.vim'
 Bundle 'Pydiction'
 Bundle 'taglist.vim'
 Bundle 'YankRing.vim'
+Bundle 'sudo.vim'
 
 Bundle 'desert256.vim'
 
