@@ -13,23 +13,19 @@ call vundle#rc()
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/vimshell'
-Bundle 'tsukkee/unite-help'
-Bundle 'h1mesuke/unite-outline'
+Bundle 'bouzuya/vim-ibus'
 
-Bundle 'Smooth-Scroll'
 Bundle 'eregex.vim'
 Bundle 'Pydiction'
 Bundle 'taglist.vim'
 Bundle 'YankRing.vim'
 Bundle 'sudo.vim'
+Bundle 'buftabs'
 
-Bundle 'desert256.vim'
+Bundle 'wombat256.vim'
 
 filetype plugin indent on
 " End of Vundle settings
-
 
 " ------------------------------------------ base settings
 syntax on
@@ -47,6 +43,7 @@ set wildmenu
 set backspace=indent,eol,start
 set showmatch
 set autoread
+set cursorline
 
 " 制御文字等を表示
 set list
@@ -84,11 +81,16 @@ set directory-=.
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 
+" バッファの切り替え
+nnoremap <C-PageUp> :bprevious<CR>
+nnoremap <C-PageDown> :bnext<CR>
+
 " CTRL-hjklでウィンドウ移動
-nnoremap <C-j> :<C-w>j
-nnoremap <C-k> :<C-k>j
-nnoremap <C-l> :<C-l>j
-nnoremap <C-h> :<C-h>j
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+
 
 " -------------------------------------------------- plugin settings
 
@@ -106,6 +108,29 @@ let g:neocomplcache_temporary_dir = $HOME.'/.vim/tmp/plugin/.neocomplcache'
 
 " unite.vim
 let g:unite_data_directory = expand('~/.vim/tmp/plugin/.unite')
+" 入力モードで開始する
+let g:unite_enable_start_insert=1
+" バッファ一覧
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+" ファイル一覧
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+" レジスタ一覧
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+" 最近使用したファイル一覧
+nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" 常用セット
+nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
+" 全部乗せ
+nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+
+" ウィンドウを分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+" ウィンドウを縦に分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
+" ESCキーを2回押すと終了する
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 
 " pydiction
 let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
@@ -114,4 +139,12 @@ let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
 let g:yankring_history_dir = expand($HOME)
 let g:yankring_history_file = '.yankring_history'
 let g:yankring_max_history = 10
+
+" buftabs
+let g:buftabs_only_basename = 1
+
+" vim-ibus
+:inoremap <silent> <Esc> <Esc>:<C-u>call ibus#disable()<CR>
+:inoremap <silent> <C-j> <C-\><C-o>:<C-u>call ibus#toggle()<CR>
+:set statusline=[%{ibus#is_enabled()?'あ':'aA'}]
 
