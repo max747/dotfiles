@@ -1,19 +1,19 @@
 #!/bin/bash
 
-DOT_FILES=( .vim .vimrc .zshrc .zshrc.mine .pyrc .colorrc )
+DOT_FILES=( vim vimrc zshrc zshrc.mine pyrc colorrc )
 
 for file in ${DOT_FILES[@]}
 do
-  if [ -a $HOME/$file ]; then
-    if [ -L $HOME/$file ]; then
-      echo "既にシンボリックリンクが存在します: $file"
-    elif [ -d $HOME/$file ]; then
-      echo "既にディレクトリが存在します: $file"
+  if [ -a $HOME/.$file ]; then
+    if [ -L $HOME/.$file ]; then
+      echo "既にシンボリックリンクが存在します: .$file"
+    elif [ -d $HOME/.$file ]; then
+      echo "既にディレクトリが存在します: .$file"
     else
-      echo "既にファイルが存在します: $file"
+      echo "既にファイルが存在します: .$file"
     fi
   else
-    ln -s $HOME/dotfiles/$file $HOME/$file
-    echo "シンボリックリンクを貼りました: $file"
+    ln -s $HOME/dotfiles/$file $HOME/.$file
+    echo "シンボリックリンクを貼りました: .$file"
   fi
 done
