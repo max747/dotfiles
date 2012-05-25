@@ -3,7 +3,6 @@
 source! /home/tkojima/.vimperatorrc.local
 
 set hintchars=ASDFGHJKLQWERTYUIOPZXCVBNM
-set hlsearch
 set complete=tsl
 set focuscontent
 
