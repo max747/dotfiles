@@ -130,3 +130,14 @@ if exists percol; then
     zle -N percol_select_history
     bindkey '^R' percol_select_history
 fi
+
+# zsh directory-stack search
+if exists percol; then
+    function percol_select_dirstack_entry() {
+        BUFFER=$(dirs -pl | percol --query "$LBUFFER")
+        CURSOR=$#BUFFER
+        zle -R -c
+    }
+    zle -N percol_select_dirstack_entry
+    bindkey '^[c' percol_select_dirstack_entry
+fi
