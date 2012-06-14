@@ -17,6 +17,7 @@ nnoremap ,eu :set encoding=UTF-8<CR>
 nnoremap ,ei :set encodeing=ISO-2022-JP<CR>
 
 style -name commandline-ime chrome://* #liberator-commandline-command input { ime-mode: inactive; }
+style chrome://* #statusbar-display[type="overLink"] {display: none !important;}
 
 " RefControl
 set! refcontrol.actions=@DEFAULT=@NORMAL\ ameba.jp=\ dtiblog.com=@FORGE\ fc2.com=\ image.itmedia.co.jp=@FORGE\ img.itmedia.co.jp=@FORGE\ minkch.com=@NORMAL\ momi7.momi3.net=@FORGE\ pixiv.net=@3RDPARTY:@FORGE\ www.b-idol.com=@FORGE\ xyzzz.blog.shinobi.jp=@FORGE
