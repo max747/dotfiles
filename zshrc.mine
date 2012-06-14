@@ -138,7 +138,7 @@ if exists percol; then
         zle -R -c
     }
     zle -N percol_select_dirstack_entry
-    bindkey '^[c' percol_select_dirstack_entry
+    bindkey '^K' percol_select_dirstack_entry
 fi
 
 setopt pushd_minus
