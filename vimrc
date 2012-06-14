@@ -15,7 +15,7 @@ Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
 Bundle 'bouzuya/vim-ibus'
 
-Bundle 'eregex.vim'
+Bundle 'othree/eregex.vim'
 Bundle 'Pydiction'
 Bundle 'taglist.vim'
 Bundle 'YankRing.vim'
