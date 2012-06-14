@@ -84,6 +84,9 @@ fi
 if exists lv; then
     alias lv='lv -c'
 fi
+if exists gvim; then
+    alias vim='gvim -p'
+fi
 
 # git-flow の補完
 if [ -f ~/.git-flow-completion.zsh ]; then
