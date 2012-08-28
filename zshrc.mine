@@ -121,7 +121,7 @@ if exists percol; then
     function percol_select_history() {
         local tac
         exists gtac && tac=gtac || tac=tac
-        BUFFER=$($tac $HISTFILE | sed 's/^: [0-9]*:[0-9]*;//' | zhist | percol --query "$LBUFFER")
+        BUFFER=$($tac $HISTFILE | sed 's/^: [0-9]*:[0-9]*;//' | zhist | percol --query "$LBUFFER" --match-method migemo)
         CURSOR=$#BUFFER         # move cursor
         zle -R -c               # refresh
     }
@@ -133,7 +133,7 @@ fi
 # zsh directory-stack search
 if exists percol; then
     function percol_select_dirstack_entry() {
-        BUFFER=$(dirs -pl | percol --query "$LBUFFER")
+        BUFFER=$(dirs -pl | percol --query "$LBUFFER" --match-method migemo)
         CURSOR=$#BUFFER
         zle -R -c
     }

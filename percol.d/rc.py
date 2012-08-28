@@ -1,3 +1,5 @@
+from percol.finder import FinderMultiQueryMigemo
+FinderMultiQueryMigemo.dictionary_path = "/usr/share/cmigemo/utf-8/migemo-dict"
 percol.view.PROMPT  = ur"<bold><yellow>percol> </yellow></bold> %q"
 
 percol.import_keymap({
