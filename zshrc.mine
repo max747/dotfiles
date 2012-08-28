@@ -33,11 +33,6 @@ if [ -d ~/github/git-tasukete ]; then
     export PATH=~/github/git-tasukete:$PATH
 fi
 
-# asakusa fw
-if [ -d ~/asakusa-develop ]; then
-    . ~/asakusa-develop/.rikisha_profile
-fi
-
 # Python Initialize script
 export PYTHONSTARTUP=~/.pyrc
 
@@ -64,14 +59,14 @@ if [ -d ~/pkg/pyside-sandbox ]; then
 fi
 
 # EDITOR
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/gvim
 
 # less options
 export LESS=-rgMj10
 
 # texlive
 if [ -d /usr/local/texlive ]; then
-    export PATH=$PATH:/usr/local/texlive/2011/bin/x86_64-linux
+    export PATH=$PATH:/usr/local/texlive/2012/bin/x86_64-linux
 fi
 
 # aliases
