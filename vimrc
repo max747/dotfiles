@@ -44,6 +44,11 @@ set backspace=indent,eol,start
 set showmatch
 set autoread
 set cursorline
+set nopaste
+
+" 文字コード判定
+set encoding=utf-8
+set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
 
 " 制御文字等を表示
 set list
