@@ -116,8 +116,8 @@ _cache_hosts=($( print_known_hosts ))
 if exists percol; then
     function percol_select_history() {
         local tac
-        exists gtac && tac=gtac || tac=tac
-        BUFFER=$($tac $HISTFILE | sed 's/^: [0-9]*:[0-9]*;//' | zhist | percol --query "$LBUFFER" --match-method migemo)
+        exists gtac && tac="gtac" || { exists tac && tac=tac || { tac="tail -r" }}
+        BUFFER=$(history -n 1 | eval $tac | percol --query "$LBUFFER" --match-method migemo)
         CURSOR=$#BUFFER         # move cursor
         zle -R -c               # refresh
     }
