@@ -117,7 +117,7 @@ autoload zed
 setopt complete_aliases     # aliased ls needs if file/dir completions work
 
 alias where="command -v"
-alias j="jobs -l"
+#alias j="jobs -l"
 
 case "${OSTYPE}" in
 freebsd*|darwin*)

@@ -42,6 +42,10 @@ if [ -d ~/devel/play ]; then
     export PATH=~/devel/play:$PATH
 fi
 
+# autojump
+# https://github.com/joelthelion/autojump
+[[ -s /etc/profile.d/autojump.sh ]] && . /etc/profile.d/autojump.sh
+
 # Python Initialize script
 export PYTHONSTARTUP=~/.pyrc
 
