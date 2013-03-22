@@ -64,7 +64,7 @@ if [ -f ~/.pythonbrew/etc/bashrc ]; then
 fi
 
 # EDITOR
-export EDITOR=/usr/bin/gvim
+export EDITOR=/usr/bin/vim
 
 # less options
 export LESS=-rgMj10
@@ -84,8 +84,8 @@ fi
 if exists lv; then
     alias lv='lv -c'
 fi
-if exists gvim; then
-    alias vim='vim -gp'
+if exists vim; then
+    alias vim='vim -p'
 fi
 
 # git-flow の補完
