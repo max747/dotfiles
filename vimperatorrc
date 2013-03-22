@@ -20,7 +20,7 @@ style -name commandline-ime chrome://* #liberator-commandline-command input { im
 style chrome://* #statusbar-display[type="overLink"] {display: none !important;}
 
 " RefControl
-set! refcontrol.actions=@DEFAULT=@NORMAL\ ameba.jp=\ dtiblog.com=@FORGE\ fc2.com=\ image.itmedia.co.jp=@FORGE\ img.itmedia.co.jp=@FORGE\ minkch.com=@NORMAL\ momi7.momi3.net=@FORGE\ pixiv.net=@3RDPARTY:@FORGE\ www.b-idol.com=@FORGE\ xyzzz.blog.shinobi.jp=@FORGE\ bitbucket.org=@FORGE
+set! refcontrol.actions=@DEFAULT=\ ameba.jp=\ dtiblog.com=@FORGE\ fc2.com=\ image.itmedia.co.jp=@FORGE\ img.itmedia.co.jp=@FORGE\ minkch.com=@NORMAL\ momi7.momi3.net=@FORGE\ pixiv.net=@3RDPARTY:@FORGE\ www.b-idol.com=@FORGE\ xyzzz.blog.shinobi.jp=@FORGE\ bitbucket.org=@FORGE
 
 " plugin_loader.js
 let g:plugin_loader_roots = "/home/tkojima/.vimperator/github/vimperator-plugins"
@@ -44,31 +44,7 @@ nnoremap ,ma :mr alc<Space>
 
 " feedSomeKeys_3.js
 lazy fmaps -u='^https?://mail\.google\.com/(mail|a)/' c j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc
-"lazy fmaps -u='^https?://plus\.google\.com/' j k
 lazy fmaps -u='^http://b\.hatena\.ne\.jp/(?!(entry|articles|guide))' j k o,oj e a,b
 nnoremap -u='^http://b\.hatena\.ne\.jp/(?!(entry|articles|guide))' a :xh a //*[contains(concat(" ",normalize-space(@class)," "), " current-element ")]/a<CR>
-
-
-javascript <<EOM
-autocommands.add(
-    'VimperatorEnter', '.*',
-    function () {
-        let Cc = Components.classes['@greasemonkey.mozdev.org/greasemonkey-service;1'] ||
-                 Components.classes['@scriptish.erikvold.com/scriptish-service;1'];
-        if (Cc) {
-            Cc = Cc.getService().wrappedJSObject;
-            if (Cc.injectScripts.toSource().search('sharedObject') == -1) {
-                Cc.injectScripts = liberator.eval(
-                    Cc.injectScripts.toSource()
-                        .replace(/(?=(?:var|let) delays|(?:firebug|fb)Console)/,
-                                'var sharedObject = {};' +
-                                'sharedObject.window = sharedObject;' +
-                                'sharedObject.__proto__ = new XPCNativeWrapper(unsafeContentWin);')
-                        .replace(/(?=sandbox\.__proto__)/, ' sandbox.window = sharedObject;'),
-                    Cc.injectScripts);
-            };
-        };
-    });
-EOM
 
 " vim: set ft=vimperator:
