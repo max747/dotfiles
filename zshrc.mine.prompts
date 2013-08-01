@@ -1,0 +1,12 @@
+# Git だろうと Mercurial だろうと、ブランチ名をzshのプロンプトにスマートに表示する方法 - ess sup
+# http://d.hatena.ne.jp/mollifier/20090814/p1
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '(%s)-[%b]'
+zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+
+RPROMPT="%1(v|%F{green}%1v%f|)"
+
+
+# ls の表示色設定
+eval `dircolors ~/.colorrc`
+alias ls='ls -F --color=auto'

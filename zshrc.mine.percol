@@ -1,0 +1,62 @@
+function exists { which $1 &> /dev/null }
+
+# zsh history search
+# https://github.com/mooz/percol
+if exists percol; then
+    function percol_select_history() {
+        local tac
+        exists gtac && tac="gtac" || { exists tac && tac=tac || { tac="tail -r" }}
+        BUFFER=$(history -n 1 | eval $tac | percol --query "$LBUFFER" --match-method migemo)
+        CURSOR=$#BUFFER         # move cursor
+        zle -R -c               # refresh
+    }
+
+    zle -N percol_select_history
+    bindkey '^R' percol_select_history
+fi
+
+# zsh directory-stack search
+if exists percol; then
+    function percol_select_dirstack_entry() {
+        BUFFER=$(dirs -pl | percol --query "$LBUFFER" --match-method migemo)
+        CURSOR=$#BUFFER
+        zle -R -c
+    }
+    zle -N percol_select_dirstack_entry
+    bindkey '^K' percol_select_dirstack_entry
+fi
+
+### ディレクトリスタックをファイルに永続化する
+# pushdを端末間で共有したり、ログアウトしても残るようにする
+# http://sanrinsha.lolipop.jp/blog/2012/02/%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%82%B9%E3%82%BF%E3%83%83%E3%82%AF%E3%82%92%E7%AB%AF%E6%9C%AB%E9%96%93%E3%81%A7%E5%85%B1%E6%9C%89%E3%81%97%E3%81%9F%E3%82%8A%E3%80%81%E4%BF%9D.html
+function share_pushd_preexec {
+    pwd >> ~/.pushd_history
+}
+
+function share_pushd_precmd {
+    # 現在のディレクトリに戻ってこれるように書き込み
+    pwd >> ~/.pushd_history
+    # 上の書き込みで重複が生じた場合かもしれないので重複を削除
+    cat ~/.pushd_history | uniq >> ~/.pushd_history
+    while read line
+    do
+        # ディレクトリが削除されていることもあるので調べる
+        [ -d $line ] && cd $line
+    done <~/.pushd_history
+    # 削除されたディレクトリが取り除かれた新しいdirsを書き込む
+    # 最新のを20だけ保存することにする
+    dirs | tr " " "\n" | sed "s|~|${HOME}|" | tac | tail -n 20 > ~/.pushd_history
+}
+
+function preexec {
+    share_pushd_preexec
+}
+
+function precmd {
+    # share pushd
+    share_pushd_precmd
+    # show vcs information
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}

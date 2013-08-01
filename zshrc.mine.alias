@@ -1,0 +1,17 @@
+function exists { which $1 &> /dev/null }
+
+if exists nautilus; then
+    alias exp=nautilus
+fi
+
+if exists colordiff; then
+    alias diff=colordiff
+fi
+
+if exists lv; then
+    alias lv='lv -c'
+fi
+
+if exists vim; then
+    alias vim='vim -p'
+fi

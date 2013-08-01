@@ -1,0 +1,32 @@
+# Python Initialize script
+if [ -f ~/.pyrc ]; then
+    export PYTHONSTARTUP=~/.pyrc
+fi
+
+# pip cache
+export PIP_DOWNLOAD_CACHE=~/.pip_cache
+
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    . /usr/local/bin/virtualenvwrapper.sh
+    # compatibility for virtualenv 1.9.x or older
+    export VIRTUALENV_USE_DISTRIBUTE=1
+fi
+
+# pythonbrew
+if [ -f ~/.pythonbrew/etc/bashrc ]; then
+    . ~/.pythonbrew/etc/bashrc
+fi
+
+
+# EDITOR envs
+if [ -f /usr/bin/vim ]; then
+    export EDITOR=/usr/bin/vim
+fi
+
+# less options
+export LESS=-rgMj10
+
+# git-flow completion
+if [ -f ~/.git-flow-completion.zsh ]; then
+    source ~/.git-flow-completion.zsh
+fi
