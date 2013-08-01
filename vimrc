@@ -25,10 +25,6 @@ Bundle 'davidhalter/jedi-vim'
 
 Bundle 'wombat256.vim'
 
-"Bundle 'Shougo/neosnippet'
-"Bundle 'honza/snipmate-snippets'
-"Bundle 'othree/eregex.vim'
-"
 filetype plugin indent on
 " End of Vundle settings
 
@@ -51,6 +47,7 @@ set showmatch
 set autoread
 set cursorline
 set nopaste
+set wrapscan
 
 " 文字コード判定
 set encoding=utf-8
@@ -115,6 +112,7 @@ augroup vimrc-auto-mkdir  " {{{
   endfunction  " }}}
 augroup END  " }}}
 
+
 " -------------------------------------------------- plugin settings
 
 " powerline
@@ -133,20 +131,6 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
-" neosnippet
-"  設定は公式デフォルトの通り - https://github.com/Shougo/neosnippet
-"imap <C-k> <Plug>(neosnippet_expand_or_jump)
-"smap <C-k> <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-"smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-"if has('conceal')
-"  set conceallevel=2 concealcursor=i
-"endif
-
-"let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
-""" end neosnippet
-
 " unite.vim
 let g:unite_data_directory = expand('~/.vim/tmp/plugin/.unite')
 " 入力モードで開始する
@@ -163,15 +147,6 @@ nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
 " 全部乗せ
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-
-" ウィンドウを分割して開く
-"au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-"au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-"au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-"au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-" ESCキーを2回押すと終了する
-"au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 
 " pydiction
 let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
