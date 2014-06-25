@@ -3,7 +3,7 @@
 source! /home/tkojima/.vimperatorrc.local
 
 set hintchars=ASDFGHJKLQWERTYUIOPZXCVBNM
-set complete=tsl
+set complete=sl
 set focuscontent
 
 nnoremap j 5j
@@ -16,23 +16,12 @@ nnoremap ,ec :set encoding=EUC-JP<CR>
 nnoremap ,eu :set encoding=UTF-8<CR>
 nnoremap ,ei :set encodeing=ISO-2022-JP<CR>
 
-style -name commandline-ime chrome://* #liberator-commandline-command input { ime-mode: inactive; }
-style chrome://* #statusbar-display[type="overLink"] {display: none !important;}
-
 " RefControl
 set! refcontrol.actions=@DEFAULT=\ ameba.jp=\ dtiblog.com=@FORGE\ fc2.com=\ image.itmedia.co.jp=@FORGE\ img.itmedia.co.jp=@FORGE\ minkch.com=@NORMAL\ momi7.momi3.net=@FORGE\ pixiv.net=@3RDPARTY:@FORGE\ www.b-idol.com=@FORGE\ xyzzz.blog.shinobi.jp=@FORGE\ bitbucket.org=@FORGE
 
 " plugin_loader.js
 let g:plugin_loader_roots = "/home/tkojima/.vimperator/github/vimperator-plugins"
-let g:plugin_loader_plugins = "_libly,copy,feedSomeKeys_3,statusline-toolbar,multi_requester,prevent-pseudo-domain,opener,direct_bookmark,sbmcommentsviewer,walk-input,twittperator"
-
-command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
-
-" direct_bookmark.js
-let g:direct_sbm_use_services_by_tag = "h"
-let g:direct_sbm_use_services_by_post = "h"
-nnoremap B :sbm<CR>
-nnoremap <C-B> :sbm<Space>
+let g:plugin_loader_plugins = "_libly,copy,multi_requester,prevent-pseudo-domain,opener,sbmcommentsviewer,walk-input"
 
 " sbmcommentsviewer.js
 let g:def_sbm_format = "id,tags,comment,timestamp"
@@ -41,10 +30,5 @@ noremap V :viewSBMComments<CR>
 
 " multi_requester.js
 nnoremap ,ma :mr alc<Space>
-
-" feedSomeKeys_3.js
-lazy fmaps -u='^https?://mail\.google\.com/(mail|a)/' c j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc
-lazy fmaps -u='^http://b\.hatena\.ne\.jp/(?!(entry|articles|guide))' j k o,oj e a,b
-nnoremap -u='^http://b\.hatena\.ne\.jp/(?!(entry|articles|guide))' a :xh a //*[contains(concat(" ",normalize-space(@class)," "), " current-element ")]/a<CR>
 
 " vim: set ft=vimperator:
