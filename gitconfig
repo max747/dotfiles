@@ -1,0 +1,36 @@
+[user]
+    name = KOJIMA Takanori
+    email = tkojima@accense.com
+
+[tig "bind"]
+    generic = g move-first-line
+    generic = G move-last-line
+
+[core]
+    pager = lv -c
+    quotepath = true
+    editor = vim -f
+
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+    di = diff
+    lo = log --graph --pretty='format:%C(yellow)%h%Cblue%d%Creset %s %C(black bold)%an, %ar%Creset'
+    fo = fetch origin --prune
+    dc = diff --cached
+    fp = fetch --prune
+    web = browse
+
+[merge]
+    ff = false
+
+[color]
+    ui = auto
+
+[pager]
+    diff = diff-highlight | less
+
+[push]
+    default = current
