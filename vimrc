@@ -3,6 +3,7 @@ set nocompatible
 " Vundle を使うための設定
 " http://vim-users.jp/2011/04/hack215/
 filetype off
+set rtp+=$GOROOT/misc/vim
 set rtp+=~/.vim/vundle.git/
 call vundle#rc()
 
@@ -12,7 +13,6 @@ call vundle#rc()
 "  - git リポジトリーから取得する ... Bundle 'git://url'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/unite.vim'
 Bundle 'fuenor/im_control.vim'
 Bundle 'Pydiction'
 Bundle 'taglist.vim'
@@ -25,11 +25,13 @@ Bundle 'davidhalter/jedi-vim'
 
 Bundle 'wombat256.vim'
 
+set runtimepath+=/usr/local/go/misc/vim
 filetype plugin indent on
 " End of Vundle settings
 
+
 " ------------------------------------------ base settings
-"syntax on
+syntax on
 set term=xterm-256color
 set autoindent
 set smartindent
@@ -131,51 +133,18 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
-" unite.vim
-let g:unite_data_directory = expand('~/.vim/tmp/plugin/.unite')
-" 入力モードで開始する
-let g:unite_enable_start_insert=1
-" バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-" ファイル一覧
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-" レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" 常用セット
-nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
-" 全部乗せ
-nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-
 " pydiction
 let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
-
-" yankring
-let g:yankring_history_dir = expand($HOME)
-let g:yankring_history_file = '.yankring_history'
-let g:yankring_max_history = 10
 
 " buftabs
 let g:buftabs_only_basename = 1
 
 " im_contorl.vim
-" https://sites.google.com/site/fudist/Home/vim-nihongo-ban/vim-japanese/ime-control
-" 日本語入力固定モード切替キー
-inoremap <silent> <C-j> <C-^><C-r>=IMState('FixMode')<CR>
-" IBus の制御を Python で行うか ?
-" 3: 自動判定
-let IM_CtrlIBusPython = 3
+" https://sites.google.com/site/fudist/Home/vim-nihongo-ban/vim-japanese/ime-controla
+let IM_CtrlMode = 6
+
 " Insert モードを抜けるときの IM OFF 速度を調整
 set timeout timeoutlen=3000 ttimeoutlen=80
-
-" 日本語入力固定モードがオンの場合、ステータス行にメッセージ表示
-set statusline+=%{IMStatus('[日本語固定]')}
-
-" im_control.vimがない環境でもエラーを出さないためのダミー関数
-function! IMStatus(...)
-  return ''
-endfunction
 
 " jedi-vim
 let g:jedi#popup_on_dot = 0
