@@ -19,8 +19,12 @@ function sudo {
 }
 
 function ssh {
-    local window_name=$(tmux display -p '#{window_name}')
+    if [ $TMUX ]; then
+        local window_name=$(tmux display -p '#{window_name}')
+    fi
     command ssh $@
-    tmux rename-window $window_name
+    if [ $TMUX ]; then
+        tmux rename-window $window_name
+    fi
 }
 
