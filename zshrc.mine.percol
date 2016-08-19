@@ -15,7 +15,7 @@ if exists peco; then
 fi
 
 # zsh directory-stack search
-if exists percol; then
+if exists peco; then
     function percol_select_dirstack_entry() {
         BUFFER=$(dirs -pl | peco --query "$LBUFFER")
         CURSOR=$#BUFFER
@@ -23,6 +23,20 @@ if exists percol; then
     }
     zle -N percol_select_dirstack_entry
     bindkey '^K' percol_select_dirstack_entry
+fi
+
+# ghq search
+if exists peco && exists ghq; then
+    function peco-src () {
+        local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+        if [ -n "$selected_dir" ]; then
+            BUFFER="cd ${selected_dir}"
+            zle accept-line
+        fi
+        zle clear-screen
+    }
+    zle -N peco-src
+    bindkey '^H' peco-src
 fi
 
 ### ディレクトリスタックをファイルに永続化する
@@ -51,11 +65,3 @@ function preexec {
     share_pushd_preexec
 }
 
-function precmd {
-    # share pushd
-    share_pushd_precmd
-    # show vcs information
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-}

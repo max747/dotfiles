@@ -12,19 +12,20 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export VIRTUALENV_USE_DISTRIBUTE=1
 fi
 
-# pythonbrew
-if [ -f ~/.pythonbrew/etc/bashrc ]; then
-    . ~/.pythonbrew/etc/bashrc
-fi
-
-
 # EDITOR envs
 if [ -f /usr/bin/vim ]; then
     export EDITOR=/usr/bin/vim
 fi
 
 # less options
-export LESS=-rgMj10
+export LESS=-irgMRj10
+export LESS_TERMCAP_mb=$(tput bold)                # begin blinking
+export LESS_TERMCAP_md=$(tput bold; tput setaf 4)  # begin bold (blue)
+export LESS_TERMCAP_me=$(tput sgr0)                # end mode
+export LESS_TERMCAP_se=$(tput sgr0)                # end standout-mode
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3)  # begin standout-mode (yellow)
+export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)     # end underline
+export LESS_TERMCAP_us=$(tput smul; tput setaf 2)  # begin underline (green)
 
 # git-flow completion
 if [ -f ~/.git-flow-completion.zsh ]; then

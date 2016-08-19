@@ -17,11 +17,11 @@ nnoremap ,eu :set encoding=UTF-8<CR>
 nnoremap ,ei :set encodeing=ISO-2022-JP<CR>
 
 " RefControl
-set! refcontrol.actions=@DEFAULT=\ ameba.jp=\ dtiblog.com=@FORGE\ fc2.com=\ image.itmedia.co.jp=@FORGE\ img.itmedia.co.jp=@FORGE\ minkch.com=@NORMAL\ momi7.momi3.net=@FORGE\ pixiv.net=@3RDPARTY:@FORGE\ www.b-idol.com=@FORGE\ xyzzz.blog.shinobi.jp=@FORGE\ bitbucket.org=@FORGE
+set! refcontrol.actions=@DEFAULT=\ ameba.jp=\ dtiblog.com=@FORGE\ fc2.com=\ image.itmedia.co.jp=@FORGE\ img.itmedia.co.jp=@FORGE\ minkch.com=@NORMAL\ momi7.momi3.net=@FORGE\ pixiv.net=@3RDPARTY:@FORGE\ www.b-idol.com=@FORGE\ xyzzz.blog.shinobi.jp=@FORGE\ bitbucket.org=@FORGE\ aws.amazon.com=@FORGE\ localhost=@FORGE\ cgi.b4iine.net=@FORGE\ twitter.com=@NORMAL
 
 " plugin_loader.js
 let g:plugin_loader_roots = "/home/tkojima/.vimperator/github/vimperator-plugins"
-let g:plugin_loader_plugins = "_libly,copy,multi_requester,prevent-pseudo-domain,opener,sbmcommentsviewer,walk-input"
+let g:plugin_loader_plugins = "_libly,copy,multi_requester,prevent-pseudo-domain,opener-ex,sbmcommentsviewer"
 
 " sbmcommentsviewer.js
 let g:def_sbm_format = "id,tags,comment,timestamp"

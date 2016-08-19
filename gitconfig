@@ -1,5 +1,5 @@
 [user]
-    name = KOJIMA Takanori
+    name = Kojima Takanori
     email = tkojima@accense.com
 
 [tig "bind"]
@@ -22,9 +22,6 @@
     dc = diff --cached
     fp = fetch --prune
     web = browse
-
-[merge]
-    ff = false
 
 [color]
     ui = auto

@@ -1,37 +1,25 @@
-set nocompatible
+call plug#begin('~/.vim/plugged')
 
-" Vundle を使うための設定
-" http://vim-users.jp/2011/04/hack215/
-filetype off
-set rtp+=$GOROOT/misc/vim
-set rtp+=~/.vim/vundle.git/
-call vundle#rc()
+Plug 'Lokaltog/vim-powerline'
+Plug 'Shougo/neocomplete.vim'
+Plug 'fuenor/im_control.vim'
+Plug 'Pydiction'
+Plug 'sudo.vim'
+Plug 'buftabs'
+Plug 'scrooloose/syntastic'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'davidhalter/jedi-vim'
+Plug 'fatih/vim-go'
 
-" Bundle の指定
-"  - github から取得する ... Bundle 'user_name/repository_name'
-"  - vim-scripts から取得する ... Bundle 'script_name'
-"  - git リポジトリーから取得する ... Bundle 'git://url'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'Shougo/neocomplcache'
-Bundle 'fuenor/im_control.vim'
-Bundle 'Pydiction'
-Bundle 'taglist.vim'
-Bundle 'YankRing.vim'
-Bundle 'sudo.vim'
-Bundle 'buftabs'
-Bundle 'scrooloose/syntastic'
-Bundle 'jmcantrell/vim-virtualenv'
-Bundle 'davidhalter/jedi-vim'
+Plug 'sickill/vim-monokai'
 
-Bundle 'wombat256.vim'
-
-set runtimepath+=/usr/local/go/misc/vim
-filetype plugin indent on
-" End of Vundle settings
-
+call plug#end()
 
 " ------------------------------------------ base settings
+filetype plugin indent on
 syntax on
+autocmd ColorScheme * highlight Comment ctermfg=10 guifg=#008800
+colorscheme monokai
 set term=xterm-256color
 set autoindent
 set smartindent
@@ -121,17 +109,80 @@ augroup END  " }}}
 set laststatus=2
 let g:Powerline_symbols='fancy'
 
-" neocomplcache.vim
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_temporary_dir = $HOME.'/.vim/tmp/plugin/.neocomplcache'
+" netcomplete.vim
+" Note: This option must set it in .vimrc(_vimrc). NOT IN .gvimrc(_gvimrc)!
 
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
 
 " pydiction
 let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
@@ -144,7 +195,7 @@ let g:buftabs_only_basename = 1
 let IM_CtrlMode = 6
 
 " Insert モードを抜けるときの IM OFF 速度を調整
-set timeout timeoutlen=3000 ttimeoutlen=80
+set timeout timeoutlen=2000 ttimeoutlen=60
 
 " jedi-vim
 let g:jedi#popup_on_dot = 0
